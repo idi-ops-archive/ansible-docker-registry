@@ -1,0 +1,13 @@
+---
+
+- name: Remove old htpasswd file
+  file:
+    path: /etc/docker/auth/htpasswd
+    state: absent
+
+- name: Create auth password file
+  shell: >
+    docker run --entrypoint htpasswd registry:2 -Bbn
+    {{ item.key }} {{ item.value }} >> /etc/docker/auth/htpasswd
+  with_dict: '{{ docker_registry_users }}'
+ 

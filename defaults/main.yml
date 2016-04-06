@@ -1,0 +1,9 @@
+---
+
+docker_registry_users:
+  admin: 'root'
+
+docker_registry_certfiles:
+  - "certs/pki/issued/registry.crt"
+  - "certs/pki/private/registry-dec.key"
+ 

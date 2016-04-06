@@ -1,0 +1,30 @@
+---
+
+- name: Create registry data directory
+  file:
+    path: /var/lib/docker-registry
+    state: directory
+    recurse: yes
+
+- name: Set SElinux context for registry data directory
+  file:
+    path: /var/lib/docker-registry
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+    recurse: yes
+
+- name: Create directory for ssl certs
+  file:
+    name: "/etc/docker/{{ item }}"
+    state: directory
+  with_items:
+    - ssl-registry
+    - auth
+
+- name: Copy certfiles
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/docker/ssl-registry/"
+  with_items: '{{ docker_registry_certfiles }}'
+
