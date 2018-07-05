@@ -1,13 +1,13 @@
 ---
 
-- name: Destroy docker registry
-  docker:
+- name: Destroy Docker registry
+  docker_container:
     name: "registry"
     image: "registry:2"
     state: absent
 
-- name: Build Docker Registry
-  docker:
+- name: Build Docker registry
+  docker_container:
     name: "registry"
     image: "registry:2"
     restart_policy: always
@@ -22,5 +22,5 @@
       REGISTRY_AUTH_HTPASSWD_PATH: "/auth/htpasswd"
       REGISTRY_HTTP_TLS_CERTIFICATE: "/certs/registry.crt"
       REGISTRY_HTTP_TLS_KEY: "/certs/registry-dec.key"
-    state: reloaded
+    state: present
  
